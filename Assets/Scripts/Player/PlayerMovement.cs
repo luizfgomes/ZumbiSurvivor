@@ -9,6 +9,8 @@ namespace Player.Movement
         [SerializeField] private FixedJoystick _fixedJoystick;
         [SerializeField] private Rigidbody _rigidbody;
 
+        private readonly float _deadzoneValue = 0.001f;
+
         private void Awake ()
         {
             if ( !_rigidbody )
@@ -26,7 +28,8 @@ namespace Player.Movement
 
             Vector3 inputDirection = new Vector3(horizontal, 0f, vertical);
 
-            if ( inputDirection.sqrMagnitude < 0.001f )
+            //For correcting the deadzone if the game is expanded in the future.
+            if ( inputDirection.sqrMagnitude < _deadzoneValue )
                 return;
 
             Vector3 move = inputDirection.normalized * _charData.moveSpeed * Time.fixedDeltaTime;
