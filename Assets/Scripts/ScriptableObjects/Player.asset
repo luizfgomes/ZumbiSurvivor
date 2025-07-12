@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   maxHealth: 0
-  moveSpeed: 0
+  moveSpeed: 10
   attackDamage: 0
+  rotationSpeed: 1000
   hitSfx: {fileID: 0}
   deathVfx: {fileID: 0}

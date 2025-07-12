@@ -2,42 +2,65 @@ using UnityEngine;
 
 namespace Player.Movement
 {
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(CharacterController))]
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private CharData _charData;
         [SerializeField] private FixedJoystick _fixedJoystick;
-        [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField] private CharacterController _characterController;
 
         private readonly float _deadzoneValue = 0.001f;
+        private readonly float _gravity = -9.8f;
+        private bool _isGrounded;
+        private bool _isRunning;
+        private Vector3 _velocity;
+
+        public bool IsRunning
+        {
+            get => _isRunning;
+        }
 
         private void Awake ()
         {
-            if ( !_rigidbody )
-            {
+            if ( !_characterController )
                 return;
-            }
 
-            _rigidbody = GetComponent<Rigidbody>();
+            _characterController = GetComponent<CharacterController>();
         }
 
         private void FixedUpdate ()
         {
-            var vertical = _fixedJoystick.Vertical;
-            var horizontal = _fixedJoystick.Horizontal;
+            float moveHorizontal = _fixedJoystick.Horizontal;
+            float moveVertical = _fixedJoystick.Vertical;
 
-            Vector3 inputDirection = new Vector3(horizontal, 0f, vertical);
+            Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
 
-            //For correcting the deadzone if the game is expanded in the future.
-            if ( inputDirection.sqrMagnitude < _deadzoneValue )
-                return;
+            _isGrounded = _characterController.isGrounded;
 
-            Vector3 move = inputDirection.normalized * _charData.moveSpeed * Time.fixedDeltaTime;
-            _rigidbody.MovePosition(_rigidbody.position + move);
+            if ( movement.magnitude > 1 )
+            {
+                movement.Normalize();
+            }
 
-            Quaternion targetRotation = Quaternion.LookRotation(inputDirection);
-            Quaternion smoothedRotation = Quaternion.Slerp(_rigidbody.rotation, targetRotation, _charData.rotationSpeed * Time.fixedDeltaTime);
-            _rigidbody.MoveRotation(smoothedRotation);
+            _characterController.Move(movement * _charData.moveSpeed * Time.deltaTime);
+
+            if ( movement.magnitude > 0 )
+            {
+                Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _charData.rotationSpeed * Time.deltaTime);
+            }
+
+            if ( !_isGrounded )
+            {
+                _velocity.y += _gravity * Time.deltaTime;
+            } else
+            {
+                _velocity.y = 0;
+            }
+
+            _characterController.Move(_velocity * Time.deltaTime);
+
+            _isRunning = (moveHorizontal != 0 || moveVertical != 0) ? true : (_characterController.velocity.magnitude == 0 ? false : _isRunning);
         }
     }
 }
