@@ -6,7 +6,7 @@ public abstract class AnimationController : MonoBehaviour, IAnimationController
 
     protected virtual void Awake ()
     {
-        if ( !animator )
+        if ( animator )
             return;
         animator = GetComponentInChildren<Animator>();
     }
