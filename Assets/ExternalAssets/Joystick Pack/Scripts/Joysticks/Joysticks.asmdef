@@ -1,0 +1,16 @@
+{
+    "name": "Joystick",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6270c01670eecc846a11b41b51dd74e5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

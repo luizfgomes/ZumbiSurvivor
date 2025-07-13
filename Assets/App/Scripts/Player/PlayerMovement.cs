@@ -60,7 +60,10 @@ namespace Player.Movement
 
             _characterController.Move(_velocity * Time.deltaTime);
 
-            _isRunning = (moveHorizontal != 0 || moveVertical != 0) ? true : (_characterController.velocity.magnitude == 0 ? false : _isRunning);
+            _isRunning = (moveHorizontal != 0 || moveVertical != 0) ? true : false;
+
+            Debug.Log("_isRunning é: " + _isRunning);
+            Debug.Log("O moveHorizontal é: " + moveHorizontal + " O moveVertical é : " + moveVertical);
         }
     }
 }
