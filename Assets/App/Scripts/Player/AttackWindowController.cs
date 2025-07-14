@@ -15,10 +15,18 @@ public class AttackWindowController : MonoBehaviour, IAttackWindow
         {
             _hitBox = GetComponent<BoxCollider>();
             _hitBox.enabled = false;
-        } 
+        }
     }
 
-    public void EnabledPunchEvent () => _hitBox.enabled = true;
+    public void EnabledPunchEvent ()
+    {
+        _hitBox.enabled = true;
+        EventBus.RaiseOnPunchEventEnabled();
+    }
 
-    public void DisabledPunchEvent () => _hitBox.enabled = false;
+    public void DisabledPunchEvent ()
+    {
+        _hitBox.enabled = false;
+        EventBus.RaiseOnPunchEventDisabled();
+    }
 }
