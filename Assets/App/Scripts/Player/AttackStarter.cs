@@ -20,6 +20,7 @@ namespace Player.Atack
             if ( Input.GetKeyDown(KeyCode.Space) )
             {
                 _playerAnimationController.Attack();
+                EventBus.RaiseOnAttackStart();
                 Debug.Log("Teste");
             }
         }
