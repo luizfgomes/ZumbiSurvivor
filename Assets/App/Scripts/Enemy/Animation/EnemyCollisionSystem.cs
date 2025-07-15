@@ -28,17 +28,6 @@ namespace Enemy.Collision.System
                 EventBus.RaiseOnEnemyTurn();
             }
         }
-
-        private void OnTriggerExit ( Collider other )
-        {
-            
-        }
-
-        private void OnTriggerStay ( Collider other )
-        {
-
-        }
-
         #endregion
 
         private bool IsPlayerInFront(Transform player )
