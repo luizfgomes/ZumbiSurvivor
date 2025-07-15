@@ -18,14 +18,14 @@ namespace Enemy.Collision.System
                 {
                     _target = other.gameObject;
                 }
-            }
 
-            if( IsPlayerInFront(_target.transform) )
-            {
-                EventBus.RaiseOnEnemyTransition();
-            } else
-            {
-                EventBus.RaiseOnEnemyTurn();
+                if ( IsPlayerInFront(_target.transform) )
+                {
+                    EventBus.RaiseOnEnemyTransition();
+                } else
+                {
+                    EventBus.RaiseOnEnemyTurn();
+                }
             }
         }
         #endregion
