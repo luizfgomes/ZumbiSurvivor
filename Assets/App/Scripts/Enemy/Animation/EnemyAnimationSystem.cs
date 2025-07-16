@@ -6,7 +6,13 @@ namespace Enemy.Animation
     public class EnemyAnimationSystem : AnimationController
     {
         private EnemyCollisionSystem _enemyCollisionSystem;
+        [SerializeField]private YAxisLerpRotator _yAxisLerpRotator;
 
+        private void Awake ()
+        {
+            if( !_yAxisLerpRotator )
+                _yAxisLerpRotator = GetComponent<YAxisLerpRotator>();
+        }
         private void OnEnable ()
         {
             EventBus.OnEnemyTransition += Transition;
@@ -30,6 +36,7 @@ namespace Enemy.Animation
         private void Turn ()
         {
             animator.SetTrigger("Turn");
+            _yAxisLerpRotator.Rotate180();
         }
 
         private void Running ()

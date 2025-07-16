@@ -1,13 +1,24 @@
 using UnityEngine;
+using Enemy.Navigation;
+using UnityEngine.AI;
 
 namespace Enemy.Collision.System
 {
     public class EnemyCollisionSystem : MonoBehaviour
     {
-        private GameObject _target;
+        private Transform _target;
         private bool _isFacingRight;
+        [SerializeField] private EnemyNavigationSystem _agent;
 
         public bool IsFacingRight => _isFacingRight;
+
+        private void Awake ()
+        {
+            if ( !_agent )
+            {
+                _agent = GetComponent<EnemyNavigationSystem>();
+            }
+        }
 
         #region collider region
         private void OnTriggerEnter ( Collider other )
@@ -16,16 +27,18 @@ namespace Enemy.Collision.System
             {
                 if ( !_target )
                 {
-                    _target = other.gameObject;
+                    _target = other.transform;
                 }
 
-                if ( IsPlayerInFront(_target.transform) )
+                if ( IsPlayerInFront(_target) )
                 {
                     EventBus.RaiseOnEnemyTransition();
                 } else
                 {
                     EventBus.RaiseOnEnemyTurn();
                 }
+
+                _agent.Target = _target;
             }
         }
         #endregion
