@@ -1,30 +1,37 @@
 using UnityEngine;
+using System;
 using Enemy.Collision.System;
 
 namespace Enemy.Animation
 {
     public class EnemyAnimationSystem : AnimationController
     {
-        private EnemyCollisionSystem _enemyCollisionSystem;
         [SerializeField]private YAxisLerpRotator _yAxisLerpRotator;
+        [SerializeField] private EnemyCollisionSystem _enemyCollisionSystem;
+        public Action OnEnemyRunning { get; set; }
 
         private void Awake ()
         {
             if( !_yAxisLerpRotator )
                 _yAxisLerpRotator = GetComponent<YAxisLerpRotator>();
+
+            if ( !_enemyCollisionSystem )
+            {
+                _enemyCollisionSystem = GetComponent<EnemyCollisionSystem>();
+            }
         }
         private void OnEnable ()
         {
-            EventBus.OnEnemyTransition += Transition;
-            EventBus.OnEnemyTurn += Turn;
-            EventBus.OnEnemyRunning += Running;
+            _enemyCollisionSystem.OnEnemyTransition += Transition;
+            _enemyCollisionSystem.OnEnemyTurn += Turn;
+            OnEnemyRunning += Running;
         }
 
         private void OnDisable ()
         {
-            EventBus.OnEnemyTransition -= Transition;
-            EventBus.OnEnemyTurn -= Turn;
-            EventBus.OnEnemyRunning -= Running;
+            _enemyCollisionSystem.OnEnemyTransition -= Transition;
+            _enemyCollisionSystem.OnEnemyTurn -= Turn;
+            OnEnemyRunning -= Running;
         }
 
         #region  new animation status
@@ -48,7 +55,7 @@ namespace Enemy.Animation
         //AnimationEvent
         public void ZombieRun ()
         {
-            EventBus.RaiseOnOnEnemyRunning();
+            OnEnemyRunning?.Invoke();
         }
     }
 }

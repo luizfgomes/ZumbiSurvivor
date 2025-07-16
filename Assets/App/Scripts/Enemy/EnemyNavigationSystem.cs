@@ -1,21 +1,24 @@
 using UnityEngine;
 using UnityEngine.AI;
+using Enemy.Animation;
 
 namespace Enemy.Navigation
 {
     public class EnemyNavigationSystem : MonoBehaviour
     {
         [SerializeField] private Transform _target;
-        private NavMeshAgent _agent;
+        [SerializeField] private CharData _enemyData;
+        [SerializeField] private NavMeshAgent _agent;
+        private EnemyAnimationSystem _enemyAnimationSystem;
 
         private void OnEnable ()
         {
-            EventBus.OnEnemyRunning += Test;
+            _enemyAnimationSystem.OnEnemyRunning += SetMovementActive;
         }
 
         private void OnDisable ()
         {
-            EventBus.OnEnemyRunning -= Test;
+            _enemyAnimationSystem.OnEnemyRunning -= SetMovementActive;
         }
 
         public Transform Target
@@ -26,11 +29,21 @@ namespace Enemy.Navigation
         private void Awake ()
         {
             _agent = GetComponent<NavMeshAgent>();
+            _enemyAnimationSystem = GetComponent<EnemyAnimationSystem>();
+        }
+
+        private void Start ()
+        {
             SetMovementDisactive();
         }
 
         private void Update ()
         {
+            if ( !_enemyData.isAlive && !_agent.isStopped )
+            {
+                SetMovementDisactive();
+                return;
+            }
             if ( _target != null && !_agent.isStopped )
             {
                 _agent.SetDestination(_target.position);
@@ -40,11 +53,6 @@ namespace Enemy.Navigation
         public void SetTarget ( Transform newTarget )
         {
             _target = newTarget;
-        }
-
-        public void Test ()
-        {
-            SetMovementActive();
         }
 
         public void SetMovementActive ()

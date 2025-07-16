@@ -1,16 +1,18 @@
 using UnityEngine;
 using Enemy.Navigation;
-using UnityEngine.AI;
+using System;
 
 namespace Enemy.Collision.System
 {
     public class EnemyCollisionSystem : MonoBehaviour
     {
+        [SerializeField] private EnemyNavigationSystem _agent;
         private Transform _target;
         private bool _isFacingRight;
-        [SerializeField] private EnemyNavigationSystem _agent;
 
         public bool IsFacingRight => _isFacingRight;
+        public Action OnEnemyTransition{ get; set; }
+        public Action OnEnemyTurn { get; set; }
 
         private void Awake ()
         {
@@ -32,10 +34,10 @@ namespace Enemy.Collision.System
 
                 if ( IsPlayerInFront(_target) )
                 {
-                    EventBus.RaiseOnEnemyTransition();
+                    OnEnemyTransition?.Invoke();
                 } else
                 {
-                    EventBus.RaiseOnEnemyTurn();
+                    OnEnemyTurn?.Invoke();
                 }
 
                 _agent.Target = _target;

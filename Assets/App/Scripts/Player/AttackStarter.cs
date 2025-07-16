@@ -21,7 +21,6 @@ namespace Player.Atack
             {
                 _playerAnimationController.Attack();
                 EventBus.RaiseOnAttackStart();
-                Debug.Log("Teste");
             }
         }
     }
