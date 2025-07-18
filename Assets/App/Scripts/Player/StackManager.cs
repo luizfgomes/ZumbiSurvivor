@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public class StackManager : MonoBehaviour
 {
+    [SerializeField] private PlayerStatus _playerStatus;
     [SerializeField] private Transform stackRoot;
     [SerializeField] private float verticalOffset = 0.4f;
     [SerializeField] private int maxStack = 10;
@@ -22,6 +24,11 @@ public class StackManager : MonoBehaviour
 
     private List<StackedEnemy> stackedEnemies = new();
 
+    private void Start ()
+    {
+        EventBus.RaiseOnStackEnemy();
+    }
+
     private void LateUpdate ()
     {
         float time = Time.time;
@@ -34,7 +41,6 @@ public class StackManager : MonoBehaviour
 
             Vector3 baseOffset = Vector3.up * verticalOffset;
 
-            // Wiggle vertical apenas no eixo Y
             float wiggle = Mathf.Sin(time * wiggleFrequency + i * 0.3f) * wiggleAmplitude;
             Vector3 wiggleOffset = new Vector3(0, wiggle, 0);
 
@@ -47,7 +53,6 @@ public class StackManager : MonoBehaviour
                 followSmoothTime
             );
 
-            // Fixar rotação
             stackedEnemies [i].transform.rotation = Quaternion.identity;
         }
     }
@@ -57,6 +62,8 @@ public class StackManager : MonoBehaviour
         if ( stackedEnemies.Count >= maxStack )
             return;
 
+        _playerStatus.CurrentStack++;
+        EventBus.RaiseOnStackEnemy();
         enemyTransform.localScale = Vector3.Scale(enemyTransform.localScale, scaleReduction);
         enemyTransform.SetParent(null);
         stackedEnemies.Add(new StackedEnemy { transform = enemyTransform });
@@ -67,16 +74,24 @@ public class StackManager : MonoBehaviour
         StartCoroutine(ReleaseStackRoutine(zoneTargetPosition));
     }
 
+    private void Update ()
+    {
+        Debug.Log(stackedEnemies.Count.ToString());
+    }
+
     private IEnumerator ReleaseStackRoutine ( Vector3 zoneTargetPosition )
     {
-        float delayBetween = 0.1f; // delay entre cada inimigo sair da pilha
+        float delayBetween = 0.1f;
         List<StackedEnemy> toRelease = new List<StackedEnemy>(stackedEnemies);
-        stackedEnemies.Clear(); // limpa a pilha ativa
+        stackedEnemies.Clear();
 
         for ( int i = 0; i < toRelease.Count; i++ )
         {
             StartCoroutine(MoveAndDestroy(toRelease [i].transform, zoneTargetPosition));
             yield return new WaitForSeconds(delayBetween);
+            _playerStatus.CurrentStack--;
+            EventBus.RaiseOnStackEnemy();
+            EventBus.RaiseOnTradeEnemy();
         }
     }
 
