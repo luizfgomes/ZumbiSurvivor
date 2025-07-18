@@ -6,20 +6,16 @@ public static class EventBus
     public static event Action OnAttackStart;
     public static event Action OnPunchEventEnabled;
     public static event Action OnPunchEventDisabled;
-    #endregion
-    #region enemy variables
-    public static event Action OnEnemyTurn;
-    public static event Action OnEnemyTransition;
-    public static event Action OnEnemyRunning;
+    public static event Action OnTradeEnemy;
+    public static event Action OnStackEnemy;
     #endregion
 
     #region player methods 
     public static void RaiseOnAttackStart() => OnAttackStart?.Invoke();
     public static void RaiseOnPunchEventEnabled () => OnPunchEventEnabled?.Invoke();
     public static void RaiseOnPunchEventDisabled () => OnPunchEventDisabled?.Invoke();
+    public static void RaiseOnTradeEnemy () => OnTradeEnemy?.Invoke();
+    public static void RaiseOnStackEnemy () => OnStackEnemy?.Invoke();
     #endregion
 
-    #region enemy methods
-    public static void RaiseOnOnEnemyRunning () => OnEnemyRunning?.Invoke();
-    #endregion
 }

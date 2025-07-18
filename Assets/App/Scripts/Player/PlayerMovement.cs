@@ -5,7 +5,7 @@ namespace Player.Movement
     [RequireComponent(typeof(CharacterController))]
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private CharData _charData;
+        [SerializeField] private PlayerStatus _playerStatus;
         [SerializeField] private FixedJoystick _fixedJoystick;
         [SerializeField] private CharacterController _characterController;
 
@@ -23,9 +23,10 @@ namespace Player.Movement
         private void Awake ()
         {
             if ( !_characterController )
-                return;
+                _characterController = GetComponent<CharacterController>();
 
-            _characterController = GetComponent<CharacterController>();
+            if ( !_playerStatus )
+                _playerStatus = GetComponent<PlayerStatus>();
         }
 
         private void FixedUpdate ()
@@ -42,12 +43,12 @@ namespace Player.Movement
                 movement.Normalize();
             }
 
-            _characterController.Move(movement * _charData.moveSpeed * Time.deltaTime);
+            _characterController.Move(movement * _playerStatus.PlayerData.moveSpeed * Time.deltaTime);
 
             if ( movement.magnitude > 0 )
             {
                 Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _charData.rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _playerStatus.PlayerData.rotationSpeed * Time.deltaTime);
             }
 
             if ( !_isGrounded )

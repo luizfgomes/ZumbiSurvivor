@@ -27,8 +27,6 @@ public class AttackHitDetector : MonoBehaviour
             _ragdollController.SetRagdollActive(true);
 
             _value = _enemyStatus.IsCollectable;
-
-            Debug.Log(_value);
         }
     }
 }
