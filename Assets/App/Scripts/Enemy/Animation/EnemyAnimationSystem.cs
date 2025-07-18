@@ -1,5 +1,4 @@
 using UnityEngine;
-
 using Enemy.Collision.System;
 
 namespace Enemy.Animation
