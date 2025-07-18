@@ -16,6 +16,6 @@ MonoBehaviour:
   moveSpeed: 0
   attackDamage: 0
   rotationSpeed: 0
-  isAlive: 1
+  isAlive: 0
   hitSfx: {fileID: 0}
   deathVfx: {fileID: 0}

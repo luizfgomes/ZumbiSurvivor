@@ -10,7 +10,6 @@ namespace Util.Ragdoll
 
         public UnityEvent activeRagdoll;
 
-
         private void Awake ()
         {
             if ( !_animator )
@@ -37,7 +36,9 @@ namespace Util.Ragdoll
             }
 
             _animator.enabled = !active;
-            activeRagdoll?.Invoke();
+
+            if(active)
+                activeRagdoll?.Invoke();
         }
     }
 }

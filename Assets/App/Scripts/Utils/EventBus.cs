@@ -20,8 +20,6 @@ public static class EventBus
     #endregion
 
     #region enemy methods
-    public static void RaiseOnEnemyTurn () => OnEnemyTurn?.Invoke();
-    public static void RaiseOnEnemyTransition () => OnEnemyTransition?.Invoke();
     public static void RaiseOnOnEnemyRunning () => OnEnemyRunning?.Invoke();
     #endregion
 }

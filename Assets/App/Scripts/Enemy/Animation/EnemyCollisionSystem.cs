@@ -7,19 +7,19 @@ namespace Enemy.Collision.System
     public class EnemyCollisionSystem : MonoBehaviour
     {
         [SerializeField] private EnemyNavigationSystem _agent;
+        [SerializeField] private EnemyEvents _enemyEvents;
         private Transform _target;
         private bool _isFacingRight;
 
         public bool IsFacingRight => _isFacingRight;
-        public Action OnEnemyTransition{ get; set; }
-        public Action OnEnemyTurn { get; set; }
 
         private void Awake ()
         {
+            if ( !_enemyEvents )
+                _enemyEvents = GetComponent<EnemyEvents>();
+
             if ( !_agent )
-            {
                 _agent = GetComponent<EnemyNavigationSystem>();
-            }
         }
 
         #region collider region
@@ -34,10 +34,10 @@ namespace Enemy.Collision.System
 
                 if ( IsPlayerInFront(_target) )
                 {
-                    OnEnemyTransition?.Invoke();
+                    _enemyEvents.OnEnemyTransition();
                 } else
                 {
-                    OnEnemyTurn?.Invoke();
+                    _enemyEvents.OnEnemyTurn();
                 }
 
                 _agent.Target = _target;
