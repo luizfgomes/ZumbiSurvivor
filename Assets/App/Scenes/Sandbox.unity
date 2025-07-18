@@ -684,7 +684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1072720005}
-  _offset: {x: 0, y: 10, z: -15}
+  _offset: {x: 0, y: 7, z: -9}
   _smoothSpeed: 5
 --- !u!224 &406396034 stripped
 RectTransform:
@@ -1265,8 +1265,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 832779458}
-  - component: {fileID: 832779460}
   - component: {fileID: 832779457}
+  - component: {fileID: 832779466}
   - component: {fileID: 832779456}
   - component: {fileID: 832779459}
   - component: {fileID: 832779462}
@@ -1349,27 +1349,6 @@ MonoBehaviour:
   _yAxisLerpRotator: {fileID: 0}
   _enemyCollisionSystem: {fileID: 0}
   _enemyEvents: {fileID: 0}
---- !u!65 &832779460
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 832779455}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.9386995, y: 1.9713324, z: 0.51205873}
-  m_Center: {x: -0.24516726, y: 0.2695902, z: 0.38289666}
 --- !u!195 &832779461
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1405,7 +1384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  _enemyData: {fileID: 11400000, guid: 142755786caab6045985aca7310aeba3, type: 2}
+  _enemyData: {fileID: 0}
   _agent: {fileID: 832779461}
   _enemyEvents: {fileID: 0}
 --- !u!114 &832779463
@@ -1437,10 +1416,10 @@ MonoBehaviour:
   activeRagdoll:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 832779462}
-        m_TargetAssemblyTypeName: Enemy.Navigation.EnemyNavigationSystem, Enemy
-        m_MethodName: SetMovementDisactive
-        m_Mode: 1
+      - m_Target: {fileID: 832779457}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1449,9 +1428,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 832779462}
-        m_TargetAssemblyTypeName: Enemy.Navigation.EnemyNavigationSystem, Enemy
-        m_MethodName: Die
+      - m_Target: {fileID: 832779466}
+        m_TargetAssemblyTypeName: Enemy.EnemyStatus, Enemy
+        m_MethodName: TurnEnemyToCollectable
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1473,6 +1452,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7296e3710e21cbc48b2e924e50495fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &832779466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832779455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c4e1f249f912b74498af40e70fe5b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _charData: {fileID: 11400000, guid: 142755786caab6045985aca7310aeba3, type: 2}
 --- !u!4 &836286170 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4820402526203599662, guid: 2ce69e24a5edf79489797d574a54eae6, type: 3}

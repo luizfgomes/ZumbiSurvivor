@@ -47,12 +47,12 @@ namespace Enemy.Navigation
         private void Start ()
         {
             SetMovementDisactive();
-            _enemyData.CharData.isAlive = true;
+            _enemyData.EnemyData.isAlive = true;
         }
 
         private void Update ()
         {
-            if ( !_enemyData.CharData.isAlive )
+            if ( !_enemyData.EnemyData.isAlive )
             {
                 return;
             }
@@ -79,7 +79,7 @@ namespace Enemy.Navigation
 
         public void Die ()
         {
-            _enemyData.CharData.isAlive = false;
+            _enemyData.EnemyData.isAlive = false;
         }
     }
 }
