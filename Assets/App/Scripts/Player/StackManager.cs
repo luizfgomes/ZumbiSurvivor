@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -59,5 +60,51 @@ public class StackManager : MonoBehaviour
         enemyTransform.localScale = Vector3.Scale(enemyTransform.localScale, scaleReduction);
         enemyTransform.SetParent(null);
         stackedEnemies.Add(new StackedEnemy { transform = enemyTransform });
+    }
+
+    public void ReleaseStackToZone ( Vector3 zoneTargetPosition )
+    {
+        StartCoroutine(ReleaseStackRoutine(zoneTargetPosition));
+    }
+
+    private IEnumerator ReleaseStackRoutine ( Vector3 zoneTargetPosition )
+    {
+        float delayBetween = 0.1f; // delay entre cada inimigo sair da pilha
+        List<StackedEnemy> toRelease = new List<StackedEnemy>(stackedEnemies);
+        stackedEnemies.Clear(); // limpa a pilha ativa
+
+        for ( int i = 0; i < toRelease.Count; i++ )
+        {
+            StartCoroutine(MoveAndDestroy(toRelease [i].transform, zoneTargetPosition));
+            yield return new WaitForSeconds(delayBetween);
+        }
+    }
+
+    private IEnumerator MoveAndDestroy ( Transform enemy, Vector3 targetPosition )
+    {
+        Vector3 velocity = Vector3.zero;
+        float smoothTime = followSmoothTime;
+        float shrinkDuration = 0.4f;
+        float totalTime = 0f;
+        Vector3 startScale = enemy.localScale;
+
+        while ( Vector3.Distance(enemy.position, targetPosition) > 0.05f )
+        {
+            enemy.position = Vector3.SmoothDamp(
+                enemy.position,
+                targetPosition,
+                ref velocity,
+                smoothTime
+            );
+
+            totalTime += Time.deltaTime;
+            float t = totalTime / shrinkDuration;
+
+            enemy.localScale = Vector3.Lerp(startScale, Vector3.zero, t);
+
+            yield return null;
+        }
+
+        Destroy(enemy.gameObject);
     }
 }
