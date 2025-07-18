@@ -17,16 +17,18 @@ public class AttackHitDetector : MonoBehaviour
         {
             _ragdollController = other.GetComponentInParent<RagdollController>();
             _enemyEvents = other.GetComponentInParent<EnemyEvents>();
-            _enemyNavigationSystem = other.GetComponentInParent<EnemyNavigationSystem>();
             _enemyStatus = other.GetComponentInParent<EnemyStatus>();
 
-            if ( _enemyNavigationSystem.EnemyData.CharData.isAlive )
+            if ( _enemyStatus.EnemyData.isAlive )
                 EventBus.RaiseOnAttackStart();
+
             _enemyEvents.onDie();
 
             _ragdollController.SetRagdollActive(true);
 
             _value = _enemyStatus.IsCollectable;
+
+            Debug.Log(_value);
         }
     }
 }
