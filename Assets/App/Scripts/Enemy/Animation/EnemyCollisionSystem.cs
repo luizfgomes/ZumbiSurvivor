@@ -1,23 +1,25 @@
 using UnityEngine;
 using Enemy.Navigation;
-using UnityEngine.AI;
+using System;
 
 namespace Enemy.Collision.System
 {
     public class EnemyCollisionSystem : MonoBehaviour
     {
+        [SerializeField] private EnemyNavigationSystem _agent;
+        [SerializeField] private EnemyEvents _enemyEvents;
         private Transform _target;
         private bool _isFacingRight;
-        [SerializeField] private EnemyNavigationSystem _agent;
 
         public bool IsFacingRight => _isFacingRight;
 
         private void Awake ()
         {
+            if ( !_enemyEvents )
+                _enemyEvents = GetComponent<EnemyEvents>();
+
             if ( !_agent )
-            {
                 _agent = GetComponent<EnemyNavigationSystem>();
-            }
         }
 
         #region collider region
@@ -32,10 +34,10 @@ namespace Enemy.Collision.System
 
                 if ( IsPlayerInFront(_target) )
                 {
-                    EventBus.RaiseOnEnemyTransition();
+                    _enemyEvents.OnEnemyTransition();
                 } else
                 {
-                    EventBus.RaiseOnEnemyTurn();
+                    _enemyEvents.OnEnemyTurn();
                 }
 
                 _agent.Target = _target;

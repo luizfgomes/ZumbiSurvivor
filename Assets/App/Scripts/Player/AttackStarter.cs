@@ -7,6 +7,16 @@ namespace Player.Atack
     {
         [SerializeField] private PlayerAnimationController _playerAnimationController;
 
+        private void OnEnable ()
+        {
+            EventBus.OnAttackStart += _playerAnimationController.Attack;
+        }
+
+        private void OnDisable ()
+        {
+            EventBus.OnAttackStart -= _playerAnimationController.Attack;
+        }
+
         private void Awake ()
         {
             if ( _playerAnimationController )
@@ -21,9 +31,7 @@ namespace Player.Atack
             {
                 _playerAnimationController.Attack();
                 EventBus.RaiseOnAttackStart();
-                Debug.Log("Teste");
             }
         }
     }
 }
-

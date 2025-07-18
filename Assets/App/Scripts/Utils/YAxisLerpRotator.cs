@@ -9,6 +9,14 @@ public class YAxisLerpRotator : MonoBehaviour
     private Quaternion _startRot;
     private Quaternion _endRot;
 
+    public bool IsRotation
+    {
+        set
+        {
+            _isRotating = value;
+        }
+    }
+
     public void Rotate180 ()
     {
         if ( _isRotating )

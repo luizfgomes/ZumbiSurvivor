@@ -8,6 +8,7 @@ public class CharData : ScriptableObject
     public float moveSpeed = 0;
     public float attackDamage = 0;
     public float rotationSpeed = 0;
+    public bool isAlive = true;
 
     [Header("FX")]
     public AudioClip hitSfx;

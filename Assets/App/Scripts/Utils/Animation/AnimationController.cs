@@ -4,7 +4,7 @@ public abstract class AnimationController : MonoBehaviour, IAnimationController
 {
     [SerializeField]protected Animator animator;
 
-    protected virtual void Awake ()
+    public virtual void Awake ()
     {
         if ( animator )
             return;

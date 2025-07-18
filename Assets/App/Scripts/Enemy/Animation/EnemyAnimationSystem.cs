@@ -5,26 +5,36 @@ namespace Enemy.Animation
 {
     public class EnemyAnimationSystem : AnimationController
     {
-        private EnemyCollisionSystem _enemyCollisionSystem;
-        [SerializeField]private YAxisLerpRotator _yAxisLerpRotator;
+        [SerializeField] private YAxisLerpRotator _yAxisLerpRotator;
+        [SerializeField] private EnemyCollisionSystem _enemyCollisionSystem;
+        [SerializeField] private EnemyEvents _enemyEvents;
 
         private void Awake ()
         {
+            if ( !_enemyEvents )
+                _enemyEvents = GetComponent<EnemyEvents>();
+
             if( !_yAxisLerpRotator )
                 _yAxisLerpRotator = GetComponent<YAxisLerpRotator>();
+
+            if ( !_enemyCollisionSystem )
+            {
+                _enemyCollisionSystem = GetComponent<EnemyCollisionSystem>();
+            }
         }
+
         private void OnEnable ()
         {
-            EventBus.OnEnemyTransition += Transition;
-            EventBus.OnEnemyTurn += Turn;
-            EventBus.OnEnemyRunning += Running;
+            _enemyEvents.onEnemyTransition += Transition;
+            _enemyEvents.onEnemyTurn += Turn;
+            _enemyEvents.onEnemyRunning += Running;
         }
 
         private void OnDisable ()
         {
-            EventBus.OnEnemyTransition -= Transition;
-            EventBus.OnEnemyTurn -= Turn;
-            EventBus.OnEnemyRunning -= Running;
+            _enemyEvents.onEnemyTransition -= Transition;
+            _enemyEvents.onEnemyTurn -= Turn;
+            _enemyEvents.onEnemyRunning -= Running;
         }
 
         #region  new animation status
@@ -48,8 +58,7 @@ namespace Enemy.Animation
         //AnimationEvent
         public void ZombieRun ()
         {
-            EventBus.RaiseOnOnEnemyRunning();
+            _enemyEvents.OnEnemyRunning();
         }
     }
 }
-
