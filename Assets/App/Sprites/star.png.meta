@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c8171e792b2336b4aab7dabd9c452e39
+guid: d4e619599afb44f4bab2866b49bf8500
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,12 +121,34 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: star_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10
+        width: 512
+        height: 492
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7559f1842d846c94e80c688546930494
+      internalID: -1433542133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 2cd628bc3ec360745bd7da11cc7feb26
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +157,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      star_0: -1433542133
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

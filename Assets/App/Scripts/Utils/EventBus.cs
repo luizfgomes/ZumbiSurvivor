@@ -8,6 +8,7 @@ public static class EventBus
     public static event Action OnPunchEventDisabled;
     public static event Action OnTradeEnemy;
     public static event Action OnStackEnemy;
+    public static event Action OnUpdateUI;
     #endregion
 
     #region player methods 
@@ -16,6 +17,7 @@ public static class EventBus
     public static void RaiseOnPunchEventDisabled () => OnPunchEventDisabled?.Invoke();
     public static void RaiseOnTradeEnemy () => OnTradeEnemy?.Invoke();
     public static void RaiseOnStackEnemy () => OnStackEnemy?.Invoke();
+    public static void RaiseOnUpdateUI () => OnUpdateUI?.Invoke();
     #endregion
 
 }

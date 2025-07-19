@@ -13,12 +13,14 @@ public class HUDController : MonoBehaviour
     {
         EventBus.OnTradeEnemy += UpdateMoney;
         EventBus.OnStackEnemy += UpdateStack;
+        EventBus.OnUpdateUI += UpdateUI;
     }
 
     private void OnDisable ()
     {
         EventBus.OnTradeEnemy -= UpdateMoney;
         EventBus.OnStackEnemy -= UpdateStack;
+        EventBus.OnUpdateUI += UpdateUI;
     }
 
     public void UpdateMoney ()
@@ -30,6 +32,12 @@ public class HUDController : MonoBehaviour
 
     public void UpdateStack ()
     {
+        _txtStack.text = _playerStatus.CurrentStack + "/" + _playerStatus.MaxStack;
+    }
+
+    public void UpdateUI ()
+    {
+        _txtMoney.text = _playerStatus.CurrentMoney.ToString();
         _txtStack.text = _playerStatus.CurrentStack + "/" + _playerStatus.MaxStack;
     }
 }
