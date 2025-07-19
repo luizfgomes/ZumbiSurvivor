@@ -12,7 +12,6 @@ public class CameraFollowingPlayer : MonoBehaviour
         {
             Vector3 desiredPosition = _target.position + _offset;
 
-            // Aqui é onde a mágica da suavização real acontece
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed * Time.deltaTime);
 
             transform.position = smoothedPosition;
