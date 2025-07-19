@@ -14,7 +14,7 @@ public class StackManager : MonoBehaviour
 
     [Header("Wiggle Settings")]
     [SerializeField] private float wiggleAmplitude = 0.025f;
-    [SerializeField] private float wiggleFrequency = 2f;     // menor = mais suave
+    [SerializeField] private float wiggleFrequency = 2f;
 
     private class StackedEnemy
     {
@@ -72,11 +72,6 @@ public class StackManager : MonoBehaviour
     public void ReleaseStackToZone ( Vector3 zoneTargetPosition )
     {
         StartCoroutine(ReleaseStackRoutine(zoneTargetPosition));
-    }
-
-    private void Update ()
-    {
-        Debug.Log(stackedEnemies.Count.ToString());
     }
 
     private IEnumerator ReleaseStackRoutine ( Vector3 zoneTargetPosition )

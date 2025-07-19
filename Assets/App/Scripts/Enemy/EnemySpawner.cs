@@ -9,7 +9,6 @@ public class EnemySpawner : MonoBehaviour
 
     void Update ()
     {
-        // Verifica se o inimigo atual foi destruído
         if ( currentEnemy == null )
         {
             SpawnEnemy();
